@@ -1,10 +1,10 @@
 <h2>Heroes</h2>
 <ul class="heroes list" cdkDropList  [cdkDropListData]="heroes"
  (cdkDropListDropped)="drop($event)">
-  <li *ngFor="let hero of heroes" (click)="onSelect(hero)"
-    [class.selected]="hero === selectedHero" cdkDrag>
-    <span class="badge">{{ hero.id }}</span>{{hero.name}}
+  <li *ngFor="let hero of heroes" cdkDrag>
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">{{ hero.id }}</span>{{hero.name}}
+    </a>
   </li>
 </ul>
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
 
