@@ -4,6 +4,7 @@ import { HeroService } from '../hero.service';
 import { MessageService } from '../message.service';
 
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { subscribeOn } from 'rxjs/operators';
 
 
 @Component({
@@ -25,6 +26,20 @@ export class HeroesComponent implements OnInit {
       heroes => this.heroes = heroes);
   }
 
+  add(name: string, eng: string): void {
+    name = name.trim();
+    eng = eng.trim();
+    if ((!name) && (!eng)) { return; }
+    this.heroService.addHero({name, eng} as Hero)
+    .subscribe(hero => {
+      this.heroes.push(hero);
+    })
+  }
+
+  delete(hero: Hero): void{
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
